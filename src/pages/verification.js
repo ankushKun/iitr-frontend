@@ -89,6 +89,10 @@ export default function Verification() {
         console.log(picture);
     }, [picture]);
 
+    useEffect(() => {
+
+    }, [])
+
     function handleScan(data) {
         if (data && !gotCogniID) {
             console.log(data);
@@ -105,7 +109,7 @@ export default function Verification() {
             <Navbar />
             <LoadingOverlay visible={showLoader} overlayBlur={2} />
             <div className="flex justify-center gap-20">
-                {!gotCogniID && <QrReader
+                {gotCogniID ? <QrReader
                     delay={100}
                     style={{
                         height: 240,
@@ -113,6 +117,14 @@ export default function Verification() {
                     }}
                     onError={handleError}
                     onScan={handleScan}
+                /> : <Webcam
+                    audio={false}
+                    height={400}
+                    ref={webcamRef}
+                    width={400}
+                    screenshotFormat="image/jpeg"
+                    videoConstraints={videoConstraints}
+                    className="rounded-md"
                 />}
                 <ToastContainer position="top-right" theme="dark" />
             </div>
